@@ -32,17 +32,34 @@ namespace Wallet.Services.Identity.Services
                 throw new ArgumentException($"the email '{args.Email}' is already in use.");
 
 
-            var pass = PasswordHelper.GenerateHashedPassword(args.Password);
             var user = new User
             {
                 Username = args.Username.ToLower(),
-                Email = args.Email.ToLower(),
-                PasswordHash = pass.Password,
-                PasswordSalt = pass.Salt
+                Email = args.Email.ToLower()
             };
 
-            var res = await _userRepository.InsertItem(user);
+            var res = await _userRepository.InsertItem(user,args.Password);
             return res.Id;
+        }
+
+        public async Task<AuthenticationResponse> AuthenticateUser(AuthenticationRequest authenticationRequest)
+        {
+            var res = new AuthenticationResponse();
+
+            var user = await _userRepository.GetUserByUsername(authenticationRequest.Username.ToLower()) ?? await _userRepository.GetUserByEmail(authenticationRequest.Username.ToLower());
+
+            if (user != null)
+            {
+                if (await _userRepository.ValidatePassword(user, authenticationRequest.Password))
+                {
+                    res.IsSuccessful = true;
+                    return res;
+                }
+            }
+
+            res.IsSuccessful = false;
+            res.Message = "Invalid Credentials.";
+            return res;
         }
     }
 }

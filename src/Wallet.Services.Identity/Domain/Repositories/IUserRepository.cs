@@ -10,6 +10,7 @@ namespace Wallet.Services.Identity.Domain.Repositories
     {
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserByUsername(string username);
-        Task<User> InsertItem(User user);
+        Task<User> InsertItem(User user, string password);
+        Task<bool> ValidatePassword(User user, string password);
     }
 }

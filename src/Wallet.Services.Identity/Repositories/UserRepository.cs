@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Coddee.Crypto;
 using Microsoft.EntityFrameworkCore;
 using Wallet.Services.Identity.Domain.Models;
 using Wallet.Services.Identity.Domain.Repositories;
@@ -27,11 +28,19 @@ namespace Wallet.Services.Identity.Repositories
             return _identityContext.Users.FirstOrDefaultAsync(e => e.Email == email.ToLower());
         }
 
-        public async Task<User> InsertItem(User user)
+        public async Task<User> InsertItem(User user, string password)
         {
+            var pass = PasswordHelper.GenerateHashedPassword(password);
+            user.PasswordHash = pass.Password;
+            user.PasswordSalt = pass.Salt;
             var res = await this._identityContext.Users.AddAsync(user);
             await _identityContext.SaveChangesAsync();
             return res.Entity;
+        }
+
+        public Task<bool> ValidatePassword(User user, string password)
+        {
+            return Task.FromResult(PasswordHelper.ValidatePassword(password, user.PasswordSalt, user.PasswordHash));
         }
     }
 }
