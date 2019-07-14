@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "wallet.services.identity",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/a/{everything}",
