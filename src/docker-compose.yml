@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+
   rabbitmq:
     image: rabbitmq
 
@@ -32,10 +33,13 @@ services:
       - "5001:80"
     depends_on:
       - rabbitmq
-      - wallet.sql
-  
- 
+      - wallet.sql  
 
-
-
+  wallet.webspa:
+    image: ${DOCKER_REGISTRY-}walletwebspa
+    build:
+      context: .
+      dockerfile: Wallet.WebSPA/Dockerfile
+    depends_on:
+      - wallet.api
 

@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EA
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FD79B215-77E8-4BB0-BEFF-5EB934F7AC93}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{9EF74EB9-95E9-4474-AF87-853A8B161E53}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.WebSPA", "Wallet.WebSPA\Wallet.WebSPA.csproj", "{EE73A63C-9087-43B8-A862-59F20555E9DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{FD79B215-77E8-4BB0-BEFF-5EB934F7AC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD79B215-77E8-4BB0-BEFF-5EB934F7AC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD79B215-77E8-4BB0-BEFF-5EB934F7AC93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE73A63C-9087-43B8-A862-59F20555E9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE73A63C-9087-43B8-A862-59F20555E9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE73A63C-9087-43B8-A862-59F20555E9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE73A63C-9087-43B8-A862-59F20555E9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{73A604F9-59A2-4596-91A8-1FCFBA781081} = {EA1F1DB7-E708-4A80-A2D6-7649C4074EBB}
 		{D0A8EC55-C60E-4938-A7F2-4C5141C1D1EB} = {EA1F1DB7-E708-4A80-A2D6-7649C4074EBB}
+		{EE73A63C-9087-43B8-A862-59F20555E9DD} = {9EF74EB9-95E9-4474-AF87-853A8B161E53}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F15FE57B-9743-4A86-8B9E-7544CC765E14}
