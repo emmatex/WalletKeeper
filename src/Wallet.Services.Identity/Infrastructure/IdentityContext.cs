@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Coddee.Crypto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,19 +26,21 @@ namespace Wallet.Services.Identity.Infrastructure
             builder.ApplyConfiguration(new UserConfiguration());
         }
 
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-
-        //    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-        //    var connection = @"Server=.,5344;Database=Wallet.Identity;User id=sa;Password=Pass@word;ConnectRetryCount=0";
-        //    services.AddDbContext<IdentityContext>
-        //        (options => options.UseSqlServer(connection));
-        //    // BloggingContext requires
-        //    // using EFGetStarted.AspNetCore.NewDb.Models;
-        //    // UseSqlServer requires
-        //    // using Microsoft.EntityFrameworkCore;
-        //}
+        public void Seed()
+        {
+            if (!Users.Any())
+            {
+                var pass = PasswordHelper.GenerateHashedPassword("123");
+                Users.Add(new User
+                {
+                    Username = "admin",
+                    Email = "admin@mail.com",
+                    PasswordHash = pass.Password,
+                    PasswordSalt = pass.Salt
+                });
+                SaveChanges();
+            }
+        }
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>

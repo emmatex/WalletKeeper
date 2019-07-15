@@ -35,11 +35,11 @@ namespace Wallet.Services.Identity
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
+                }).AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -51,35 +51,33 @@ namespace Wallet.Services.Identity
                     };
                 });
 
-            services.AddRabbitMq(_configuration);
+
             services.AddDbContext<IdentityContext>(config => { config.UseSqlServer(_configuration["sql:connection"]); });
-            services.AddMvc();
+            
 
 
-            services.AddScoped<IUserRepository,UserRepository>();
-            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
-            ConfigureEventBus(services);
+
+            services.AddRabbitMq(_configuration)
+                .SubscribeToCommandAsync<CreateUserCommand>();
+            services.AddMvc();
         }
 
-    
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.EnsureDataSeed();
             }
 
             app.UseMvcWithDefaultRoute();
         }
 
-        private void ConfigureEventBus(IServiceCollection services)
-        {
-            var provider = services.BuildServiceProvider();
-            var bus = provider.GetService<IBusClient>();
-            bus.WithCommandHandlerAsync<CreateUserCommand>(provider);
-        }
 
     }
 }

@@ -16,6 +16,7 @@ using Ocelot.Middleware;
 using RawRabbit;
 using Wallet.Api.Handlers;
 using Wallet.Events;
+using Wallet.Services;
 using Wallet.Services.RabbitMq;
 
 namespace Wallet.Api
@@ -36,12 +37,16 @@ namespace Wallet.Api
             services.AddContainer();
             services.AddLogger(new LoggerOptions(LoggerTypes.DebugOutput, LogRecordTypes.Debug));
 
-            services.AddRabbitMq(_configuration);
-            services.AddMvc();
+   
 
 
             services.AddScoped<IEventHandler<UserCreatedEvent>, UserCreatedEventHandler>();
-            ConfigureEventBus(services);
+
+            services.AddRabbitMq(_configuration)
+                .SubscribeToEventAsync<UserCreatedEvent>();
+
+
+            services.AddMvc();
             services.AddOcelot(_configuration);
         }
 
@@ -55,13 +60,6 @@ namespace Wallet.Api
 
             app.UseMvcWithDefaultRoute();
             app.UseOcelot().Wait();
-        }
-
-        private void ConfigureEventBus(IServiceCollection services)
-        {
-            var provider = services.BuildServiceProvider();
-            var bus = provider.GetService<IBusClient>();
-            bus.WithEventHandlerAsync<UserCreatedEvent>(provider);
         }
     }
 }

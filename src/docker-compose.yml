@@ -3,16 +3,12 @@ version: '3.4'
 services:
   rabbitmq:
     image: rabbitmq
-    ports: 
-      - "5672:5672"
 
   wallet.sql:
     image: microsoft/mssql-server-linux:2017-latest
     environment:
       SA_PASSWORD: "Pass@word"
       ACCEPT_EULA: "Y"
-    volumes:
-    - "D:/DockerShared:/var/opt/mssql"
     ports: 
     - "1433:1433"
 

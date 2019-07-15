@@ -12,12 +12,12 @@ namespace Wallet.Services.Identity.Handlers
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
         private readonly IUserService _userService;
-        private readonly IBusClient _busClient;
+        private readonly IEventsBus _eventBus;
 
-        public CreateUserCommandHandler(IUserService userService,IBusClient busClient)
+        public CreateUserCommandHandler(IUserService userService,IEventsBus eventBus)
         {
             _userService = userService;
-            _busClient = busClient;
+            _eventBus = eventBus;
         }
 
         public async Task Handle(CreateUserCommand command)
@@ -29,7 +29,7 @@ namespace Wallet.Services.Identity.Handlers
                 Password = command.Password
             });
 
-            await _busClient.PublishAsync(new UserCreatedEvent
+            await _eventBus.PublicEventAsync(new UserCreatedEvent
             {
                 Username = command.Username,
                 Email = command.Email,
