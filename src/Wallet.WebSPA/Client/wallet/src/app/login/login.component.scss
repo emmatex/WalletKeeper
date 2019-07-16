@@ -1,0 +1,48 @@
+.login-container {
+  .progress-container {
+
+  }
+
+  mat-progress-bar {
+    border-radius: 30px 30px 0 0;
+    height: 7px;
+  }
+
+  .login-form-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0 20px;
+
+  }
+
+  border-radius: 10px;
+  border: 1px solid #bdbdbd;
+  width: 800px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+
+  .logo {
+    height: 250px;
+    margin-left: 25px;
+  }
+
+  .login-form {
+    justify-self: center;
+    align-self: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    mat-form-field {
+      width: 250px;
+    }
+
+    button {
+      width: 250px;
+    }
+  }
+}

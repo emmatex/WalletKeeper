@@ -62,6 +62,17 @@ namespace Wallet.Services.Identity
 
             services.AddRabbitMq(_configuration)
                 .SubscribeToCommandAsync<CreateUserCommand>();
+
+            services.AddCors(config =>
+            {
+                config.AddPolicy("allow", e =>
+                {
+                    e.SetIsOriginAllowed((host) => true);
+                    e.AllowAnyHeader();
+                    e.AllowAnyMethod();
+                    e.AllowCredentials();
+                });
+            });
             services.AddMvc();
         }
 
@@ -75,6 +86,7 @@ namespace Wallet.Services.Identity
                 app.EnsureDataSeed();
             }
 
+            app.UseCors("allow");
             app.UseMvcWithDefaultRoute();
         }
 
