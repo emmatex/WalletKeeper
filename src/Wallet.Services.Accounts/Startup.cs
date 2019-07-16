@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using RawRabbit;
-using Wallet.Commands;
+using Wallet.Services.Accounts.Infrastructure;
 using Wallet.Services.Authentication;
-using Wallet.Services.Identity.Domain.Repositories;
-using Wallet.Services.Identity.Handlers;
-using Wallet.Services.Identity.Infrastructure;
-using Wallet.Services.Identity.Repositories;
-using Wallet.Services.Identity.Services;
 using Wallet.Services.RabbitMq;
+using Microsoft.OpenApi.Models;
 
-namespace Wallet.Services.Identity
+namespace Wallet.Services.Accounts
 {
     public class Startup
     {
@@ -38,15 +30,15 @@ namespace Wallet.Services.Identity
         {
             services.AddJwtAuthentication(_configuration);
             services.AddSqlRepos(_configuration);
-
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ICommandHandler<CreateUserCommand>, CreateUserCommandHandler>();
-
-            services.AddRabbitMq(_configuration).SubscribeToCommandAsync<CreateUserCommand>();
+            services.AddRabbitMq(_configuration);
             services.AddAllowCors();
             services.AddMvc();
-        }
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WalletKeeper API", Version = "v1" });
+            });
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -57,10 +49,14 @@ namespace Wallet.Services.Identity
                 app.EnsureDataSeed();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WalletKeeper API V1");
+            });
+
             app.UseAllowCors();
             app.UseMvcWithDefaultRoute();
         }
-
-
     }
 }

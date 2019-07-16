@@ -35,6 +35,16 @@ services:
       - rabbitmq
       - wallet.sql  
 
+  wallet.services.accounts:
+    image: ${DOCKER_REGISTRY-}walletservicesaccounts
+    build:
+      context: .
+      dockerfile: Wallet.Services.Accounts/Dockerfile
+    ports: 
+      - "5002:80"
+    depends_on:
+      - wallet.services.identity
+
   wallet.webspa:
     image: ${DOCKER_REGISTRY-}walletwebspa
     build:
@@ -42,4 +52,7 @@ services:
       dockerfile: Wallet.WebSPA/Dockerfile
     depends_on:
       - wallet.api
+
+
+
 

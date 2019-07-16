@@ -25,15 +25,7 @@ namespace Wallet.Services.Identity.Infrastructure
         {
             builder.ApplyConfiguration(new UserConfiguration());
         }
-        public void ConfigureServices(IServiceCollection services)
-        {
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            var connection = @"Server=.;Database=Wallet.Identity;User id=sa;Password=Pass@word;ConnectRetryCount=0";
-            services.AddDbContext<IdentityContext>
-                (options => options.UseSqlServer(connection));
-        }
         public void Seed()
         {
             if (!Users.Any())
