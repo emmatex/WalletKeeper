@@ -1,1 +1,10 @@
 
+.app-container{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  .current-component-container{
+    display: flex;
+    flex-grow: 1;
+  }
+}

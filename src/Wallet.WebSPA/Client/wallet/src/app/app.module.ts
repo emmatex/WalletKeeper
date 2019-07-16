@@ -8,17 +8,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AuthService} from "./auth.service";
 import {CookieService} from "ngx-cookie-service";
 import {HomeModule} from "./home/home.module";
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import {MatButtonModule, MatIconModule, MatToolbarModule} from "@angular/material";
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToolbarComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatIconModule,
+    MatToolbarModule,
     LoginModule,
-    HomeModule
+    HomeModule,
+    MatButtonModule
   ],
   providers: [CookieService,AuthService],
   bootstrap: [AppComponent]

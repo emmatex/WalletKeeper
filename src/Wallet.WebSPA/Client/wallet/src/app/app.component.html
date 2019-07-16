@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<app-toolbar *ngIf="loggedin"></app-toolbar>
+<div class="app-container">
+  <app-sidebar></app-sidebar>
+  <div class="current-component-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

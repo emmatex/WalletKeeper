@@ -1,0 +1,17 @@
+@import '../../common';
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 160px;
+  padding-right: 20px;
+  padding-top: 10px;
+  button{
+    text-align: left;
+    border-radius: 0 66px 66px 0;
+    &.active{
+      color:$primary-color;
+      background-color: lighten($primary-color,60);
+    }
+  }
+}
