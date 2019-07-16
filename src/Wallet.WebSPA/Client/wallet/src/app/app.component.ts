@@ -27,5 +27,9 @@ export class AppComponent {
       `logo`,
       domSanitizer.bypassSecurityTrustResourceUrl("../assets/Logo-colored.svg")
     );
+    matIconRegistry.addSvgIcon(
+      `logo-mini`,
+      domSanitizer.bypassSecurityTrustResourceUrl("../assets/Logo-colored-mini.svg")
+    );
   };
 }

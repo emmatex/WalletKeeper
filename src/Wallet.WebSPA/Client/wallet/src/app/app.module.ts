@@ -11,6 +11,7 @@ import {HomeModule} from "./home/home.module";
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatButtonModule, MatIconModule, MatToolbarModule} from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {AccountsModule} from "./accounts/accounts.module";
 
 @NgModule({
   declarations: [
@@ -24,9 +25,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
+    MatButtonModule,
     LoginModule,
     HomeModule,
-    MatButtonModule
+    AccountsModule
   ],
   providers: [CookieService,AuthService],
   bootstrap: [AppComponent]
