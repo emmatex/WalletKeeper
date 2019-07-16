@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LoginModule} from "./login/login.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {FormsModule} from "@angular/forms";
+import {AuthService} from "./auth.service";
+import {CookieService} from "ngx-cookie-service";
+import {HomeModule} from "./home/home.module";
 
 @NgModule({
   declarations: [
@@ -14,10 +16,11 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LoginModule,
     BrowserAnimationsModule,
+    LoginModule,
+    HomeModule
   ],
-  providers: [],
+  providers: [CookieService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
