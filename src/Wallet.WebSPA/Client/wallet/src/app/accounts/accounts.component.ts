@@ -3,8 +3,9 @@ import {Account} from '../domain/models/account.model';
 import {MatDialog} from "@angular/material";
 import {CreateAccountComponent} from "./create-account/create-account.component";
 import {HttpClientService} from "../http-client.service";
-import {getAccounts} from "../urls";
+import {getAccount, getAccounts} from "../urls";
 import {forkJoin, Observable} from "rxjs";
+import {EditAccountComponent} from "./edit-account/edit-account.component";
 
 @Component({
   selector: 'app-accounts',
@@ -30,7 +31,20 @@ busy :boolean = false;
   createAccount() {
     const dialogRef = this.dialog.open(CreateAccountComponent);
     dialogRef.afterClosed().subscribe(res=>{
-      console.log(res);
+      if(!res)
+        return;
+      
+      this.http.get<Account>(getAccount(res.id)).subscribe(res=> this.accounts.push(res));
+    });
+  }
+
+  edit(account: Account) {
+    const dialogRef = this.dialog.open(EditAccountComponent,{data:account});
+    dialogRef.afterClosed().subscribe(()=>{
+      this.http.get<Account>(getAccount(account.id)).subscribe(res=> {
+        const old = this.accounts.indexOf(account);
+        this.accounts[old] = res;
+      });
     });
   }
 }

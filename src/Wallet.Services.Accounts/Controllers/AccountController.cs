@@ -49,7 +49,7 @@ namespace Wallet.Services.Accounts.Controllers
             if (account.UserId != _identityService.GetUserId())
                 return Unauthorized("The requested account is not owned by the requesting user.");
 
-            return Ok(account);
+            return Ok(new AccountInfoViewModel(account));
         }
 
         [HttpPost]
@@ -71,6 +71,25 @@ namespace Wallet.Services.Accounts.Controllers
             return CreatedAtAction(nameof(GetAccount), routeValues, routeValues);
         }
 
+        [HttpPut]
+        [Route("")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> UpdateAccount([FromBody] Account account)
+        {
+            if (account == null)
+                return BadRequest("Account parameter not found.");
+
+            if ((await _accountRepository.GetAccountAsync(account.Id)).UserId != _identityService.GetUserId())
+                return Unauthorized("This account is owned by a different user.");
+
+
+            await _accountRepository.UpdateAccount(account);
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("")]
         [ProducesResponseType(typeof(IEnumerable<AccountInfoViewModel>), (int) HttpStatusCode.OK)]
@@ -78,14 +97,7 @@ namespace Wallet.Services.Accounts.Controllers
         public async Task<IActionResult> GetAccounts()
         {
             var userId = _identityService.GetUserId();
-            var res = (await _accountRepository.GetAccountsByUserAsync(userId)).Select(e=> new AccountInfoViewModel
-            {
-                AccountTypeId = e.AccountTypeId,
-                Id = e.Id,
-                CreatedAt = e.CreatedAt,
-                Title = e.Title,
-                AccountTypeTitle = e.AccountType.Title
-            });
+            var res = (await _accountRepository.GetAccountsByUserAsync(userId)).Select(e=> new AccountInfoViewModel(e));
             return Ok(res);
         }
     }

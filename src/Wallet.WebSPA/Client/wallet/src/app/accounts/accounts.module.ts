@@ -11,11 +11,12 @@ import {
 } from "@angular/material";
 import { CreateAccountComponent } from './create-account/create-account.component';
 import {FormsModule} from "@angular/forms";
+import { EditAccountComponent } from './edit-account/edit-account.component';
 
 
 
 @NgModule({
-  declarations: [AccountsComponent, CreateAccountComponent],
+  declarations: [AccountsComponent, CreateAccountComponent, EditAccountComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -28,6 +29,6 @@ import {FormsModule} from "@angular/forms";
     MatSnackBarModule,
     MatProgressBarModule
   ],
-  entryComponents:[CreateAccountComponent]
+  entryComponents:[CreateAccountComponent,EditAccountComponent]
 })
 export class AccountsModule { }

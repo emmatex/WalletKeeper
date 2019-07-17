@@ -29,7 +29,7 @@ namespace Wallet.Services.Accounts.Repositories
 
         public Task<Account> GetAccountAsync(int id)
         {
-            return _context.FindAsync<Account>(id);
+            return _context.Account.Include(e => e.AccountType).FirstAsync(e=>e.Id == id);
         }
 
         public async Task<Account> CreateAccount(Account account)
@@ -42,6 +42,13 @@ namespace Wallet.Services.Accounts.Repositories
         public Task<IEnumerable<Account>> GetAccountsByUserAsync(int userId)
         {
             return _context.Account.Where(e => e.UserId == userId).Include(e => e.AccountType).ToIEnumerableAsync();
+        }
+
+        public async Task UpdateAccount(Account account)
+        {
+            var dbAccount = await _context.Account.FirstAsync(e => e.Id == account.Id);
+            dbAccount.Title = account.Title;
+            await _context.SaveChangesAsync();
         }
     }
 }
