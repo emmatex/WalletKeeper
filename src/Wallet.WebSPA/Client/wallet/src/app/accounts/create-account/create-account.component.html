@@ -1,12 +1,12 @@
 <h1 mat-dialog-title>Create a new account</h1>
 <div mat-dialog-content>
-  <form class="form">
+  <form class="form" #accountForm="ngForm">
     <mat-form-field >
-      <input matInput type="text" name="title" [(ngModel)]="title" placeholder="Account name">
+      <input matInput type="text" name="title" [(ngModel)]="title" placeholder="Account name" required>
     </mat-form-field>
     <mat-form-field >
       <mat-label>Account type</mat-label>
-      <mat-select [(value)]="selectedType">
+      <mat-select [(value)]="selectedType" required>
         <mat-option *ngFor="let type of types" [value]="type.id">
           {{type.title}}
         </mat-option>
@@ -16,5 +16,5 @@
 </div>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="null">Cancel</button>
-  <button mat-button (click)="save()" cdkFocusInitial color="primary">Save</button>
+  <button mat-button (click)="save()" cdkFocusInitial color="primary" [disabled]="busy||!accountForm.valid">Save</button>
 </mat-dialog-actions>

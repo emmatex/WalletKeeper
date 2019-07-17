@@ -23,4 +23,8 @@ export class AuthService {
     const token = this.cookies.get('st');
     this.http.setToken(token);
   }
+
+  logout() {
+    this.cookies.delete('st');
+  }
 }

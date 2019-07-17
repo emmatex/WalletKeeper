@@ -1,8 +1,36 @@
-.toolbar{
+.toolbar {
   background-color: white;
-  border-bottom: 1px solid rgba(0,0,0,.2);
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  .user-button {
+    background-color: #f7f7f7;
+    .fas {
+      font-size: 22px;
+    }
+  }
+  .brand-logo {
+    height: 80px;
+    width: 80px;
+  }
+
+  .search-container {
+    margin-left: 85px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+
+    .fas {
+      margin: 0 10px;
+    }
+
+    input {
+      height: 40px;
+      width: 400px;
+      background-color: transparent;
+      border: 0;
+      outline-width: 0;
+    }
+  }
 }
-.brand-logo{
-  height: 80px;
-  width: 80px;
-}
+

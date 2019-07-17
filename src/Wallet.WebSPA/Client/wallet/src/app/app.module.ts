@@ -8,10 +8,11 @@ import {AuthService} from "./auth.service";
 import {CookieService} from "ngx-cookie-service";
 import {HomeModule} from "./home/home.module";
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import {MatButtonModule, MatIconModule, MatToolbarModule} from "@angular/material";
+import {MatButtonModule, MatIconModule, MatInputModule, MatMenuModule, MatToolbarModule} from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {AccountsModule} from "./accounts/accounts.module";
 import {HttpClientService} from "./http-client.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,9 @@ import {HttpClientService} from "./http-client.service";
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
+    FormsModule,
+    MatInputModule,
+    MatMenuModule,
     LoginModule,
     HomeModule,
     AccountsModule

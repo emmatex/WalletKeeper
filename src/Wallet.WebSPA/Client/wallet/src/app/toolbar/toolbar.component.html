@@ -1,3 +1,15 @@
 <mat-toolbar class="toolbar">
-  <mat-icon svgIcon="logo-mini" class="brand-logo" ></mat-icon>
+  <mat-icon svgIcon="logo-mini" class="brand-logo"></mat-icon>
+  <div class="search-container">
+    <i class="fas fa-search"></i>
+    <form class="search-form">
+        <input  placeholder="Search">
+    </form>
+  </div>
+  <div class="fill"></div>
+  <button mat-icon-button class="user-button" [matMenuTriggerFor]="userMenu" a><i class="fas fa-user"></i></button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
 </mat-toolbar>
