@@ -1,4 +1,5 @@
 <div class="account-component-container">
+  <mat-progress-bar mode="indeterminate" [ngClass]="{'hidden':!busy}"></mat-progress-bar>
   <div class="add-button-container">
     <button mat-button (click)="createAccount()"> <span><i class="fas fa-plus"></i> Create new account</span></button>
   </div>

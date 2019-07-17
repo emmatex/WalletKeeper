@@ -6,7 +6,7 @@ import {
   MatDialogModule,
   MatExpansionModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatProgressBarModule,
   MatSelectModule, MatSnackBarModule
 } from "@angular/material";
 import { CreateAccountComponent } from './create-account/create-account.component';
@@ -25,7 +25,8 @@ import {FormsModule} from "@angular/forms";
     MatButtonModule,
     MatExpansionModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   entryComponents:[CreateAccountComponent]
 })

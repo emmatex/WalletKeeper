@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material";
 import {CreateAccountComponent} from "./create-account/create-account.component";
 import {HttpClientService} from "../http-client.service";
 import {getAccounts} from "../urls";
+import {forkJoin, Observable} from "rxjs";
 
 @Component({
   selector: 'app-accounts',
@@ -16,11 +17,14 @@ export class AccountsComponent implements OnInit {
   }
 
   accounts: Account[]=[];
-
+busy :boolean = false;
   ngOnInit() {
-    this.http.get<Account[]>(getAccounts()).subscribe(res=>{
+    this.busy = true;
+    const accountsOb =this.http.get<Account[]>(getAccounts());
+    accountsOb.subscribe(res=>{
       this.accounts = res;
     });
+    forkJoin(accountsOb).subscribe(()=> this.busy = false);
   }
 
   createAccount() {
