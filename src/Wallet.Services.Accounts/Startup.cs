@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Wallet.Services.Accounts.Infrastructure;
 using Wallet.Services.Authentication;
 using Wallet.Services.RabbitMq;
@@ -29,6 +32,10 @@ namespace Wallet.Services.Accounts
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddJwtAuthentication(_configuration);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
+
             services.AddSqlRepos(_configuration);
             services.AddRabbitMq(_configuration);
             services.AddAllowCors();
@@ -56,6 +63,7 @@ namespace Wallet.Services.Accounts
             });
 
             app.UseAllowCors();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
     }

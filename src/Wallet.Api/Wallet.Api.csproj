@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Wallet.Services.Common\Wallet.Services.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\" />
+  </ItemGroup>
+
 </Project>

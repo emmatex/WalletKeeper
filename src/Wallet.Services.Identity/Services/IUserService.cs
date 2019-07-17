@@ -16,6 +16,8 @@ namespace Wallet.Services.Identity.Services
     {
         public bool IsSuccessful { get; set; }
         public string Message { get; set; }
+        public int UserId { get; set; } = -1;
+        public string Username { get; set; }
     }
 
     public class AuthenticationRequest

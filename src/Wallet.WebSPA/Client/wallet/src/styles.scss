@@ -1,129 +1,5 @@
 @import 'common';
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-$mat-primary: (
-  50 : #e5e9ea,
-  100 : #bec8cb,
-  200 : #93a3a9,
-  300 : #677e87,
-  400 : #47626d,
-  500 : #264653,
-  600 : #223f4c,
-  700 : #1c3742,
-  800 : #172f39,
-  900 : #0d2029,
-  A100 : #68c8ff,
-  A200 : #35b5ff,
-  A400 : #02a3ff,
-  A700 : #0093e7,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #ffffff,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #ffffff,
-    A700 : #ffffff,
-  )
-);
-
-$mat-accent: (
-  50 : #e5f3f2,
-  100 : #bfe2dd,
-  200 : #95cec7,
-  300 : #6abab1,
-  400 : #4aaca0,
-  500 : #2a9d8f,
-  600 : #259587,
-  700 : #1f8b7c,
-  800 : #198172,
-  900 : #0f6f60,
-  A100 : #a3ffef,
-  A200 : #70ffe6,
-  A400 : #3dffdd,
-  A700 : #24ffd8,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
-);
-
-$mat-warn:(
-  50 : #fef4ec,
-  100 : #fce3d0,
-  200 : #fad1b0,
-  300 : #f7be90,
-  400 : #f6b079,
-  500 : #f4a261,
-  600 : #f39a59,
-  700 : #f1904f,
-  800 : #ef8645,
-  900 : #ec7533,
-  A100 : #ffffff,
-  A200 : #fffefe,
-  A400 : #ffddcb,
-  A700 : #ffccb2,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #000000,
-    700 : #000000,
-    800 : #000000,
-    900 : #000000,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
-);
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$wallet-primary: mat-palette($mat-primary);
-$wallet-accent: mat-palette($mat-accent, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$wallet-warn: mat-palette($mat-warn);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$wallet-theme: mat-light-theme($wallet-primary, $wallet-accent, $wallet-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($wallet-theme);
+@import 'material';
 
 html, body {
   height: 100%;
@@ -160,4 +36,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 app-sidebar{
   display: flex;
+}
+app-accounts{
+  flex-grow: 1;
 }

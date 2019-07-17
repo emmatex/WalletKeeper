@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatIconRegistry} from "@angular/material";
 import {AuthService} from "./auth.service";
+import {HttpClientService} from "./http-client.service";
 
 @Component({
   selector: 'app-root',

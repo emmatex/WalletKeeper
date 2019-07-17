@@ -53,6 +53,8 @@ namespace Wallet.Services.Identity.Services
                 if (await _userRepository.ValidatePassword(user, authenticationRequest.Password))
                 {
                     res.IsSuccessful = true;
+                    res.UserId = user.Id;
+                    res.Username = user.Username;
                     return res;
                 }
             }

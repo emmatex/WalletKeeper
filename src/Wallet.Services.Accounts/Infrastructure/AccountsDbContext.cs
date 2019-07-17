@@ -32,10 +32,10 @@ namespace Wallet.Services.Accounts.Infrastructure
             {
                 AccountTypes.AddRange(new []
                 {
-                    new AccountType{Id = 1 , Title = "Cash"}, 
-                    new AccountType{Id = 2 , Title = "Card"}, 
-                    new AccountType{Id = 3 , Title = "Savings"}, 
-                    new AccountType{Id = 4 , Title = "Other"}, 
+                    new AccountType{ Title = "Cash"}, 
+                    new AccountType{ Title = "Card"}, 
+                    new AccountType{ Title = "Savings"}, 
+                    new AccountType{ Title = "Other"}, 
                 });
                 SaveChanges();
             }
@@ -56,9 +56,12 @@ namespace Wallet.Services.Accounts.Infrastructure
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
+            builder.HasKey(e => e.Id);
+
             builder.Property(e => e.Id)
                 .IsRequired()
-                .ForSqlServerUseSequenceHiLo();
+                .ValueGeneratedOnAdd()
+                .UseSqlServerIdentityColumn();
 
             builder.Property(e => e.Title)
                 .IsRequired();

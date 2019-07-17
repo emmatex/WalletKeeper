@@ -15,9 +15,8 @@ namespace Wallet.Services.Accounts.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Wallet.Services.Accounts.Domain.Models.Account", b =>
@@ -30,11 +29,14 @@ namespace Wallet.Services.Accounts.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountTypeId");
 
                     b.ToTable("Account");
                 });
@@ -43,8 +45,7 @@ namespace Wallet.Services.Accounts.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:HiLoSequenceName", "EntityFrameworkHiLoSequence")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Title")
                         .IsRequired();
@@ -52,6 +53,14 @@ namespace Wallet.Services.Accounts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccountTypes");
+                });
+
+            modelBuilder.Entity("Wallet.Services.Accounts.Domain.Models.Account", b =>
+                {
+                    b.HasOne("Wallet.Services.Accounts.Domain.Models.AccountType", "AccountType")
+                        .WithMany()
+                        .HasForeignKey("AccountTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

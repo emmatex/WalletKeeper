@@ -33,5 +33,10 @@ namespace Wallet.Services
         {
             return (await dbSet.ToListAsync()).AsEnumerable();
         }
-    }
+
+        public static async Task<IEnumerable<T>> ToIEnumerableAsync<T>(this IQueryable<T> dbSet) where T : class
+            {
+                return (await dbSet.ToListAsync()).AsEnumerable();
+            }
+        }
 }

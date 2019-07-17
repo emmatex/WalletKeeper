@@ -11,6 +11,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatButtonModule, MatIconModule, MatToolbarModule} from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {AccountsModule} from "./accounts/accounts.module";
+import {HttpClientService} from "./http-client.service";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {AccountsModule} from "./accounts/accounts.module";
     HomeModule,
     AccountsModule
   ],
-  providers: [CookieService,AuthService],
+  providers: [CookieService,HttpClientService,AuthService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

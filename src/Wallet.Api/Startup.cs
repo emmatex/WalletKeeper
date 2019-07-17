@@ -11,12 +11,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using RawRabbit;
 using Wallet.Api.Handlers;
 using Wallet.Events;
 using Wallet.Services;
+using Wallet.Services.Authentication;
 using Wallet.Services.RabbitMq;
 
 namespace Wallet.Api
@@ -36,14 +38,11 @@ namespace Wallet.Api
         {
             services.AddContainer();
             services.AddLogger(new LoggerOptions(LoggerTypes.DebugOutput, LogRecordTypes.Debug));
-
-   
-
+            services.AddJwtAuthentication(_configuration);
 
             services.AddScoped<IEventHandler<UserCreatedEvent>, UserCreatedEventHandler>();
 
-            services.AddRabbitMq(_configuration)
-                .SubscribeToEventAsync<UserCreatedEvent>();
+            services.AddRabbitMq(_configuration).SubscribeToEventAsync<UserCreatedEvent>();
 
 
             services.AddMvc();

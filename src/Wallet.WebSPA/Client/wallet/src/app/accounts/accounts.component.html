@@ -1,1 +1,21 @@
-<p>accounts works!</p>
+<div class="account-component-container">
+  <div class="add-button-container">
+    <button mat-button (click)="createAccount()"> <span><i class="fas fa-plus"></i> Create new account</span></button>
+  </div>
+  <mat-accordion class="accounts-list">
+    <mat-expansion-panel class="account-list-item"  *ngFor="let account of accounts">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{account.title}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{account.accountTypeTitle}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p></p>
+      <mat-action-row>
+        <button mat-button>Click me</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
