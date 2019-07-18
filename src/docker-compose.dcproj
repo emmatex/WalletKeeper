@@ -4,8 +4,8 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>fd79b215-77e8-4bb0-beff-5eb934f7ac93</ProjectGuid>
-    <DockerLaunchAction>None</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>http://localhost:5010</DockerServiceUrl>
     <DockerServiceName>wallet.services.identity</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
