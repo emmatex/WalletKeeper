@@ -4,6 +4,11 @@ services:
 
   rabbitmq:
     image: rabbitmq
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
 
   wallet.sql:
     image: microsoft/mssql-server-linux:2017-latest
@@ -18,6 +23,7 @@ services:
     build:
       context: .
       dockerfile: Wallet.Services.Identity/Dockerfile
+    restart: on-failure
     ports: 
       - "5001:80"
     depends_on:
@@ -29,20 +35,26 @@ services:
     build:
       context: .
       dockerfile: Wallet.Services.Accounts/Dockerfile
+    restart: on-failure
     ports: 
       - "5002:80"
     depends_on:
+      - rabbitmq
+      - wallet.sql  
       - wallet.services.currency
       - wallet.services.identity
-
+      
   wallet.services.currency:
     image: ${DOCKER_REGISTRY-}walletservicescurrency
     build:
       context: .
       dockerfile: Wallet.Services.Currency/Dockerfile
+    restart: on-failure
     ports: 
       - "5003:80"
     depends_on:
+      - rabbitmq
+      - wallet.sql  
       - wallet.services.identity
 
   wallet.services.transactions:
@@ -50,9 +62,12 @@ services:
     build:
       context: .
       dockerfile: Wallet.Services.Transactions/Dockerfile
+    restart: on-failure
     ports: 
       - "5004:80"
     depends_on:
+      - rabbitmq
+      - wallet.sql  
       - wallet.services.currency
       - wallet.services.identity
 
@@ -61,10 +76,12 @@ services:
     build:
       context: .
       dockerfile: Wallet.Api/Dockerfile
+    restart: on-failure
     ports: 
       - "5000:80"
     depends_on:
       - rabbitmq
+      - wallet.sql  
       - wallet.services.identity
       - wallet.services.currency
       - wallet.services.accounts
