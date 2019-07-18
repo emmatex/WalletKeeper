@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Wallet.Services.Authentication;
+using Wallet.Services.RabbitMq;
+using Wallet.Services.Transactions.Infrastructure;
 
 namespace Wallet.Services.Transactions
 {

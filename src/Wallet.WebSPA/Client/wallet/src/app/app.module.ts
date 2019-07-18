@@ -8,17 +8,26 @@ import {AuthService} from "./auth.service";
 import {CookieService} from "ngx-cookie-service";
 import {HomeModule} from "./home/home.module";
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import {MatButtonModule, MatIconModule, MatInputModule, MatMenuModule, MatToolbarModule} from "@angular/material";
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatToolbarModule
+} from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {AccountsModule} from "./accounts/accounts.module";
 import {HttpClientService} from "./http-client.service";
 import {FormsModule} from "@angular/forms";
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -30,11 +39,13 @@ import {FormsModule} from "@angular/forms";
     FormsModule,
     MatInputModule,
     MatMenuModule,
+    MatDialogModule,
     LoginModule,
     HomeModule,
     AccountsModule
   ],
   providers: [CookieService,HttpClientService,AuthService,],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[DeleteConfirmationComponent]
 })
 export class AppModule { }

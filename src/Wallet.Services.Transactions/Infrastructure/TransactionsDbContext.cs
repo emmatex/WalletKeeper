@@ -28,11 +28,21 @@ namespace Wallet.Services.Transactions.Infrastructure
     {
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
-            builder.Property(e => e.Title)
-                .IsRequired();
-
             builder.HasKey(e => e.Id);
+
+            builder.Property(e => e.AccountId)
+                .IsRequired();
+            builder.Property(e => e.Amount)
+                .IsRequired();
+            builder.Property(e => e.Date)
+                .IsRequired();
+            builder.Property(e => e.Type)
+                .IsRequired();
+            builder.Property(e => e.TypeId)
+                .IsRequired();
+            builder.Property(e => e.FromAccount);
+            builder.Property(e => e.ToAccount);
+            builder.Property(e => e.Notes);
         }
     }
-}
 }

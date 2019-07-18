@@ -12,6 +12,14 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field >
+      <mat-label>Currency</mat-label>
+      <mat-select [(value)]="selectedCurrency" required>
+        <mat-option *ngFor="let currency of currencies" [value]="currency">
+          {{currency.code}} - {{currency.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 </div>
 <mat-dialog-actions align="end">

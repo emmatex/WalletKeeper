@@ -13,18 +13,6 @@ services:
     ports: 
     - "1433:1433"
 
-  wallet.api:
-    image: ${DOCKER_REGISTRY-}walletapi
-    build:
-      context: .
-      dockerfile: Wallet.Api/Dockerfile
-    ports: 
-      - "5000:80"
-    depends_on:
-      - rabbitmq
-      - wallet.services.identity
-	  - wallet.services.transactions
-
   wallet.services.identity:
     image: ${DOCKER_REGISTRY-}walletservicesidentity
     build:
@@ -44,6 +32,17 @@ services:
     ports: 
       - "5002:80"
     depends_on:
+      - wallet.services.currency
+      - wallet.services.identity
+
+  wallet.services.currency:
+    image: ${DOCKER_REGISTRY-}walletservicescurrency
+    build:
+      context: .
+      dockerfile: Wallet.Services.Currency/Dockerfile
+    ports: 
+      - "5003:80"
+    depends_on:
       - wallet.services.identity
 
   wallet.services.transactions:
@@ -51,16 +50,38 @@ services:
     build:
       context: .
       dockerfile: Wallet.Services.Transactions/Dockerfile
+    ports: 
+      - "5004:80"
+    depends_on:
+      - wallet.services.currency
+      - wallet.services.identity
+
+  wallet.api:
+    image: ${DOCKER_REGISTRY-}walletapi
+    build:
+      context: .
+      dockerfile: Wallet.Api/Dockerfile
+    ports: 
+      - "5000:80"
+    depends_on:
+      - rabbitmq
+      - wallet.services.identity
+      - wallet.services.currency
+      - wallet.services.accounts
+      - wallet.services.transactions
 
   wallet.webspa:
     image: ${DOCKER_REGISTRY-}walletwebspa
     build:
       context: .
       dockerfile: Wallet.WebSPA/Dockerfile
-	ports: 
-      - "5003:80"
+    ports: 
+      - "5010:80"
     depends_on:
       - wallet.api
+
+
+
 
 
 

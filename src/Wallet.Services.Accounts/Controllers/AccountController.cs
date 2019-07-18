@@ -90,6 +90,26 @@ namespace Wallet.Services.Accounts.Controllers
             return Ok();
         }
 
+        [HttpDelete]
+        [Route("{id:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> DeleteAccount(int id)
+        {
+            var account = await _accountRepository.GetAccountAsync(id);
+            if (account == null)
+                return NotFound("No account with requested id");
+
+            if (account.UserId != _identityService.GetUserId())
+                return Unauthorized("This account is owned by a different user.");
+
+
+            await _accountRepository.DeleteAccount(account);
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("")]
         [ProducesResponseType(typeof(IEnumerable<AccountInfoViewModel>), (int) HttpStatusCode.OK)]

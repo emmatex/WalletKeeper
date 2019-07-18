@@ -27,9 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{69
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{B73FC57D-EBB6-45BA-BA80-A73FDC2ADB3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Services.Transactions", "Wallet.Services.Transactions\Wallet.Services.Transactions.csproj", "{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.Services.Transactions", "Wallet.Services.Transactions\Wallet.Services.Transactions.csproj", "{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transactions", "Transactions", "{AF1CBDBF-1D11-486C-B898-DA185CADE6E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Currency", "Currency", "{4BEED3D8-E876-49D9-96E5-57A6C0E8C640}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Services.Currency", "Wallet.Services.Currency\Wallet.Services.Currency.csproj", "{87502D46-7BEE-4A6C-B01D-67887F7D10BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,10 @@ Global
 		{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87502D46-7BEE-4A6C-B01D-67887F7D10BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87502D46-7BEE-4A6C-B01D-67887F7D10BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87502D46-7BEE-4A6C-B01D-67887F7D10BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87502D46-7BEE-4A6C-B01D-67887F7D10BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +91,8 @@ Global
 		{69A9F6EC-3469-4EF9-8B4A-921ACAB4C39B} = {EA1F1DB7-E708-4A80-A2D6-7649C4074EBB}
 		{3A50E08F-C416-4221-9DE4-CC1B70A0BD6E} = {AF1CBDBF-1D11-486C-B898-DA185CADE6E0}
 		{AF1CBDBF-1D11-486C-B898-DA185CADE6E0} = {EA1F1DB7-E708-4A80-A2D6-7649C4074EBB}
+		{4BEED3D8-E876-49D9-96E5-57A6C0E8C640} = {EA1F1DB7-E708-4A80-A2D6-7649C4074EBB}
+		{87502D46-7BEE-4A6C-B01D-67887F7D10BE} = {4BEED3D8-E876-49D9-96E5-57A6C0E8C640}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F15FE57B-9743-4A86-8B9E-7544CC765E14}

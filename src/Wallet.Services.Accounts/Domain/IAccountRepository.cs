@@ -14,5 +14,6 @@ namespace Wallet.Services.Accounts.Domain
         Task<Account> CreateAccount(Account account);
         Task<IEnumerable<Account>> GetAccountsByUserAsync(int userId);
         Task UpdateAccount(Account account);
+        Task DeleteAccount(Account account);
     }
 }

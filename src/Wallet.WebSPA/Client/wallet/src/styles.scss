@@ -39,6 +39,7 @@ app-sidebar{
 }
 app-accounts{
   flex-grow: 1;
+  display: flex;
 }
 .fas{
   color:$font-color;

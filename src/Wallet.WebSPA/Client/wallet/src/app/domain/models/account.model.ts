@@ -5,4 +5,7 @@ export interface Account {
   accountTypeId:number;
   accountTypeTitle:string;
   createdAt:Date;
+  currencyTitle:Date;
+  currencySymbol:Date;
+  currencyCode:Date;
 }

@@ -3,7 +3,10 @@
   <div class="add-button-container">
     <button mat-button (click)="createAccount()"> <span><i class="fas fa-plus"></i> Create new account</span></button>
   </div>
-  <mat-accordion class="accounts-list">
+  <div class="no-items" *ngIf="!busy && (!accounts || accounts.length<1)">
+    <p >No account were created yet.</p>
+  </div>
+  <mat-accordion class="accounts-list" *ngIf="accounts && accounts.length > 0">
     <mat-expansion-panel class="account-list-item"  *ngFor="let account of accounts">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -15,8 +18,10 @@
       </mat-expansion-panel-header>
       <p></p>
       <mat-action-row>
+        <p>{{account.currencyCode}} - {{account.currencyTitle}}</p>
+        <div class="fill"></div>
         <button mat-icon-button (click)="edit(account)"><i class="fas fa-edit"></i></button>
-        <button mat-icon-button><i class="fas fa-trash"></i></button>
+        <button mat-icon-button (click)="delete(account)"><i class="fas fa-trash"></i></button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

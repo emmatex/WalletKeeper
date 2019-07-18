@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+WORKDIR /src
+COPY ["Wallet.Services.Currency/Wallet.Services.Currency.csproj", "Wallet.Services.Currency/"]
+COPY ["Wallet.Services.Common/Wallet.Services.Common.csproj", "Wallet.Services.Common/"]
+COPY ["Wallet.Common/Wallet.Common.csproj", "Wallet.Common/"]
+RUN dotnet restore "Wallet.Services.Currency/Wallet.Services.Currency.csproj"
+COPY . .
+WORKDIR "/src/Wallet.Services.Currency"
+RUN dotnet build "Wallet.Services.Currency.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Wallet.Services.Currency.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Wallet.Services.Currency.dll"]

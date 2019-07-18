@@ -29,10 +29,18 @@ export class HttpClientService {
       headers = headers.set("Authorization", `Bearer ${this._token}`);
     return this.http.post<T>(url, param, {headers: headers});
   }
+
   put<T>(url: string, param: any): Observable<T> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     if (this._token)
       headers = headers.set("Authorization", `Bearer ${this._token}`);
     return this.http.put<T>(url, param, {headers: headers});
+  }
+
+  delete<T>(url: string, param: HttpParams=null): Observable<T> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    if (this._token)
+      headers = headers.set("Authorization", `Bearer ${this._token}`);
+    return this.http.delete<T>(url, {headers: headers, params: param});
   }
 }

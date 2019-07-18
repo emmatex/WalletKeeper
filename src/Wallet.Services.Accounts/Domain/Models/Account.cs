@@ -13,5 +13,10 @@ namespace Wallet.Services.Accounts.Domain.Models
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
         public AccountType AccountType { get; set; }
+
+        public int CurrencyId { get; set; }
+        public string CurrencyTitle { get; set; }
+        public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
     }
 }

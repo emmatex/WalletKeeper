@@ -27,7 +27,8 @@ namespace Wallet.Services.RabbitMq
 
         public Task PublicEventAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            throw new NotImplementedException();
+            return _busClient.PublishAsync(@event,
+                context => context.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TEvent>())));
         }
 
         public Task SubscribeToCommandAsync<TCommand>(ICommandHandler<TCommand> handler) where TCommand : ICommand
@@ -38,7 +39,8 @@ namespace Wallet.Services.RabbitMq
 
         public Task PublicCommandAsync<TCommand>(TCommand Command) where TCommand : ICommand
         {
-            throw new NotImplementedException();
+            return _busClient.PublishAsync(Command,
+                context => context.UseConsumeConfiguration(cfg => cfg.FromQueue(GetQueueName<TCommand>())));
         }
         public static string GetQueueName<T>() => $"{Assembly.GetEntryAssembly().GetName()}/{typeof(T).Name}";
     }

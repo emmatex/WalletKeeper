@@ -29,6 +29,14 @@ namespace Wallet.Services.Accounts.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("CurrencyCode");
+
+                    b.Property<int>("CurrencyId");
+
+                    b.Property<string>("CurrencySymbol");
+
+                    b.Property<string>("CurrencyTitle");
+
                     b.Property<string>("Title")
                         .IsRequired();
 

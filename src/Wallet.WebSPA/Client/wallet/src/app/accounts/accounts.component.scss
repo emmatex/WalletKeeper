@@ -34,3 +34,13 @@
     color:$primary-color
   }
 }
+
+.no-items {
+  opacity: .7;
+  display: flex;
+  flex-grow: 1;
+  font-weight: bold;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+}
