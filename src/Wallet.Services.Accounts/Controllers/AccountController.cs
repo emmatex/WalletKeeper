@@ -9,6 +9,7 @@ using Wallet.Services.Accounts.Domain;
 using Wallet.Services.Accounts.Domain.Models;
 using Wallet.Services.Accounts.ViewModels;
 using Wallet.Services.Authentication;
+using Wallet.Services.Events;
 
 namespace Wallet.Services.Accounts.Controllers
 {
@@ -18,11 +19,13 @@ namespace Wallet.Services.Accounts.Controllers
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IIdentityService _identityService;
+        private readonly IEventsBus _eventsBus;
 
-        public AccountController(IAccountRepository accountRepository,IIdentityService identityService)
+        public AccountController(IAccountRepository accountRepository,IIdentityService identityService,IEventsBus eventsBus)
         {
             _accountRepository = accountRepository;
             _identityService = identityService;
+            _eventsBus = eventsBus;
         }
 
         [HttpGet]
@@ -106,7 +109,7 @@ namespace Wallet.Services.Accounts.Controllers
 
 
             await _accountRepository.DeleteAccount(account);
-
+            await _eventsBus.PublicEventAsync(new AccountDeletedEvent {AccountId = account.Id});
             return Ok();
         }
 

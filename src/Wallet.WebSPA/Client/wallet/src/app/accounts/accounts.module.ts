@@ -12,6 +12,7 @@ import {
 import { CreateAccountComponent } from './create-account/create-account.component';
 import {FormsModule} from "@angular/forms";
 import { EditAccountComponent } from './edit-account/edit-account.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -19,15 +20,7 @@ import { EditAccountComponent } from './edit-account/edit-account.component';
   declarations: [AccountsComponent, CreateAccountComponent, EditAccountComponent],
   imports: [
     CommonModule,
-    FormsModule,
-    MatInputModule,
-    MatSelectModule,
-    MatListModule,
-    MatButtonModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatProgressBarModule
+    SharedModule,
   ],
   entryComponents:[CreateAccountComponent,EditAccountComponent]
 })

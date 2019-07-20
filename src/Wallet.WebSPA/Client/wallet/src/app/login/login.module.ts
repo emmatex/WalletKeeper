@@ -1,15 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatProgressBarModule
-} from "@angular/material";
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -17,13 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
   declarations: [LoginComponent],
   imports: [
     CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    HttpClientModule,
-    MatProgressBarModule
+    SharedModule
   ]
 })
 export class LoginModule { }

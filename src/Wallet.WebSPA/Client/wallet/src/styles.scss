@@ -37,7 +37,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 app-sidebar{
   display: flex;
 }
-app-accounts{
+app-accounts,app-home{
   flex-grow: 1;
   display: flex;
 }

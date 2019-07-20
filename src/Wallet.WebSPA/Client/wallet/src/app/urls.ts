@@ -25,3 +25,6 @@ export function getCurrencies(){
 export function deleteAccount(id:number){
   return `${api()}/v1/ac/account/${id}`;
 }
+export function getTransactions(){
+  return `${api()}/v1/t/transaction/`;
+}

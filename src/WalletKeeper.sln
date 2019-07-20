@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transactions", "Transaction
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Currency", "Currency", "{4BEED3D8-E876-49D9-96E5-57A6C0E8C640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Services.Currency", "Wallet.Services.Currency\Wallet.Services.Currency.csproj", "{87502D46-7BEE-4A6C-B01D-67887F7D10BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wallet.Services.Currency", "Wallet.Services.Currency\Wallet.Services.Currency.csproj", "{87502D46-7BEE-4A6C-B01D-67887F7D10BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Logging;
 using Wallet.Services.Accounts.Infrastructure;
 using Wallet.Services.Authentication;
@@ -31,6 +34,9 @@ namespace Wallet.Services.Accounts
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+
             services.AddJwtAuthentication(_configuration);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -53,9 +59,17 @@ namespace Wallet.Services.Accounts
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.EnsureDataSeed();
             }
-
+            app.EnsureDataSeed(env.IsDevelopment());
+            app.UseHealthChecks("/hc", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            app.UseHealthChecks("/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("self")
+            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

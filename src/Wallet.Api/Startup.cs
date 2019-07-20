@@ -1,10 +1,14 @@
-﻿using Coddee.AspNet;
+﻿using System;
+using Coddee.AspNet;
 using Coddee.Loggers;
 using Coddee.Windows.AppBuilder;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Wallet.Api.Handlers;
@@ -27,6 +31,13 @@ namespace Wallet.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+
+            services.AddHealthChecksUI();
+                
+
+
             services.AddContainer();
             services.AddLogger(new LoggerOptions(LoggerTypes.DebugOutput, LogRecordTypes.Debug));
             services.AddJwtAuthentication(_configuration);
@@ -43,6 +54,16 @@ namespace Wallet.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
+            app.UseHealthChecks("/hc", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            app.UseHealthChecks("/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("self")
+            });
 
             app.UseMvcWithDefaultRoute();
             app.UseOcelot().Wait();

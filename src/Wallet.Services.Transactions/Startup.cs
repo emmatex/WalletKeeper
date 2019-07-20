@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using Wallet.Events;
 using Wallet.Services.Authentication;
+using Wallet.Services.Events;
 using Wallet.Services.RabbitMq;
+using Wallet.Services.Transactions.EventHandlers;
 using Wallet.Services.Transactions.Infrastructure;
 
 namespace Wallet.Services.Transactions
@@ -24,12 +30,18 @@ namespace Wallet.Services.Transactions
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddJwtAuthentication(_configuration);
+            services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy());
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
 
             services.AddSqlRepos(_configuration);
-            services.AddRabbitMq(_configuration);
+
+            services.AddSingleton<IEventHandler<AccountDeletedEvent>, AccountDeletedEventHandler>();
+
+            services.AddRabbitMq(_configuration)
+                .SubscribeToEventAsync<AccountDeletedEvent>();
             services.AddAllowCors();
             services.AddMvc();
 
@@ -45,9 +57,17 @@ namespace Wallet.Services.Transactions
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.EnsureDataSeed();
             }
-
+            app.EnsureDataSeed(env.IsDevelopment());
+            app.UseHealthChecks("/hc", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            app.UseHealthChecks("/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("self")
+            });
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

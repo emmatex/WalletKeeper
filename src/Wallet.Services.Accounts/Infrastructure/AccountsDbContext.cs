@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.DependencyInjection;
 using Wallet.Services.Accounts.Domain.Models;
 
 namespace Wallet.Services.Accounts.Infrastructure
@@ -26,7 +22,7 @@ namespace Wallet.Services.Accounts.Infrastructure
             builder.ApplyConfiguration(new AccountConfiguration());
         }
 
-        public void Seed()
+        public void Seed(bool isDevelopment)
         {
             if (!AccountTypes.Any())
             {
@@ -38,6 +34,28 @@ namespace Wallet.Services.Accounts.Infrastructure
                     new AccountType{ Title = "Other"}, 
                 });
                 SaveChanges();
+            }
+
+            if (isDevelopment)
+            {
+                if (!Account.Any())
+                {
+                    Account.AddRange(new Account[]
+                    {
+                        new Account
+                        {
+                            Title = "Cash default",
+                            AccountTypeId = 1,
+                            CreatedAt = DateTime.UtcNow,
+                            CurrencyCode = "USD",
+                            CurrencyId = 1,
+                            CurrencySymbol = "$",
+                            CurrencyTitle = "US Dollar",
+                            UserId = 1
+                        }
+                    });
+                    SaveChanges();
+                }
             }
         }
     }
