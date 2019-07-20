@@ -11,6 +11,7 @@ The project idea is a simple expenses tracker that can be used from a web browse
 - Entity framework core 
 - RabbitMQ
 - Ocelot
+- Swashbucke / Swagger 
 ### Web front-end
 - Angular 8 
 - Angular Material
