@@ -1,15 +1,15 @@
 <div class="transactions-list-container">
   <mat-progress-bar mode="indeterminate" [ngClass]="{'hidden':!busy}"></mat-progress-bar>
   <div class="add-button-container">
-    <button mat-button (click)="createIncome()" class="expense-button"> <span><i class="fas fa-plus"></i> Expense</span></button>
-    <button mat-button (click)="createExpense()" class="income-button"> <span><i class="fas fa-plus"></i> Income</span></button>
+    <button mat-button (click)="createExpense()" class="expense-button"> <span><i class="fas fa-plus"></i> Expense</span></button>
+    <button mat-button (click)="createIncome()" class="income-button"> <span><i class="fas fa-plus"></i> Income</span></button>
     <button mat-button (click)="createTransfer()" class="transfer-button"> <span><i class="fas fa-plus"></i> Transfer</span></button>
   </div>
   <table mat-table matSort [dataSource]="dataSource">
     <!-- Position Column -->
     <ng-container matColumnDef="transactionTypeTitle">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.transactionTypeTitle}} </td>
+      <td mat-cell *matCellDef="let element" [ngClass]="element.transactionTypeTitle" class="first"> {{element.transactionTypeTitle}} </td>
     </ng-container>
     <ng-container matColumnDef="accountTitle">
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Account </th>

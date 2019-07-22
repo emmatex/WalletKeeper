@@ -39,9 +39,13 @@ namespace Wallet.Services.Transactions
             services.AddSqlRepos(_configuration);
 
             services.AddSingleton<IEventHandler<AccountDeletedEvent>, AccountDeletedEventHandler>();
+            services.AddSingleton<IEventHandler<AccountCreatedEvent>, AccountCreatedEventHandler>();
 
             services.AddRabbitMq(_configuration)
+                .SubscribeToEventAsync<AccountCreatedEvent>()
                 .SubscribeToEventAsync<AccountDeletedEvent>();
+
+
             services.AddAllowCors();
             services.AddMvc();
 

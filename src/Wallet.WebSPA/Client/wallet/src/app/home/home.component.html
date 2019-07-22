@@ -1,1 +1,23 @@
-<app-transactions-list></app-transactions-list>
+<div class="home-container">
+  <div class="stats-list">
+    <div class="stat-item mat-elevation-z1 expense">
+      <div class="column">
+        <h2>Expenses</h2>
+        <h1 class="total">{{expenses}}</h1>
+      </div>
+      <div class="fill">
+        <p class="chart-area">Chart area</p>
+      </div>
+    </div>
+    <div class="stat-item mat-elevation-z1 income">
+      <div class="column">
+        <h2>Income</h2>
+        <h1 class="total">{{income}}</h1>
+      </div>
+      <div class="fill">
+        <p class="chart-area">Chart area</p>
+      </div>
+    </div>
+  </div>
+  <app-transactions-list (transactionCreates)="transactionCreated()"></app-transactions-list>
+</div>

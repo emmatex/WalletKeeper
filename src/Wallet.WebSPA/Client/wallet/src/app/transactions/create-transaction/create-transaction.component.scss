@@ -1,0 +1,12 @@
+.transaction-form {
+  display: flex;
+  flex-direction: column;
+
+  .row {
+    mat-form-field {
+      margin: 0 5px;
+      flex-grow: 1;
+    }
+  }
+
+}

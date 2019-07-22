@@ -1,1 +1,65 @@
-<p>create-transaction works!</p>
+<h1 mat-dialog-title>Add an {{type}}</h1>
+<div mat-dialog-content>
+  <form class="transaction-form" #accountForm="ngForm">
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Account</mat-label>
+        <mat-select (selectionChange)="accountChanged()" [(value)]="selectedAccount" required>
+          <mat-option *ngFor="let account of accounts" [value]="account">
+            {{account.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="date" name="date" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date"
+               required>
+        <owl-date-time #dt1></owl-date-time>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>{{type|titlecase}} category</mat-label>
+        <mat-select [(value)]="selectedTransactionsCategory" required>
+          <mat-option *ngFor="let category of transactionCategories" [value]="category">
+            {{category.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input cdkFocusInitial matInput [textMask]="{mask: mask}" [(ngModel)]="amount" name="amount" placeholder="Amount" required>
+      </mat-form-field>
+
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-chip-list #chipList aria-label="Tags">
+          <mat-chip *ngFor="let tag of tags" [selectable]="false"
+                    [removable]="true" (removed)="removeTag(tag)">
+            {{tag}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Tags"
+                 name="tag"
+                 [(ngModel)]="tag"
+                 [ngModelOptions]="{standalone: true}"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addTag($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <textarea name="notes" placeholder="Notes" matInput [(ngModel)]="notes"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">Cancel</button>
+  <button mat-button (click)="save()" cdkFocusInitial color="primary" [disabled]="busy||!accountForm.valid">Save
+  </button>
+</mat-dialog-actions>

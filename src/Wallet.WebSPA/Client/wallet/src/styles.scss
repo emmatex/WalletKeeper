@@ -1,5 +1,6 @@
 @import 'common';
 @import 'material';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 html, body {
   height: 100%;
@@ -46,4 +47,43 @@ app-accounts,app-home{
 }
 .fill{
   flex-grow: 1;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+}
+.column{
+  display: flex;
+  flex-direction: column;
+}
+.owl-dt-calendar-cell-content.owl-dt-calendar-cell-today.owl-dt-calendar-cell-selected,
+.owl-dt-calendar-cell-content.owl-dt-calendar-cell-selected{
+  background-color: $primary-color;
+}
+
+.owl-dt-control-content.owl-dt-control-button-content {
+  color: $primary-color;
+}
+.create-transaction{
+  mat-dialog-container{
+    border-top: 4px solid;
+    h1{
+      color:$font-color;
+    }
+  }
+}
+.create-transaction-income{
+  mat-dialog-container{
+    border-top-color: $income-color;
+  }
+}
+.create-transaction-expense{
+  mat-dialog-container{
+    border-top-color: $expense-color;
+  }
+}
+.create-transaction-transfer{
+  mat-dialog-container{
+    border-top-color: $transfer-color;
+  }
 }

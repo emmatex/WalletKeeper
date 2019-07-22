@@ -19,10 +19,18 @@ namespace Wallet.Services.Transactions.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<TransactionCategory>> GetTransactionCategoriesAsync(int userId)
+        public async Task<decimal> GetTransactionsSumByType(int transactionType, int days, int userId)
+        {
+            return await _context.Transactions.Where(e =>
+                    e.UserId == userId && e.TypeId == transactionType && e.Date >= DateTime.Today.AddDays(-days))
+                .SumAsync(e => e.Amount);
+        }
+
+        public Task<IEnumerable<TransactionCategory>> GetTransactionCategoriesAsync(int userId, int typeId)
         {
             return _context.TransactionCategories
-                .Where(e => !e.UserId.HasValue || e.UserId == userId)
+                .Where(e => (!e.UserId.HasValue || e.UserId == userId) && e.TransactionType == typeId)
+                .OrderBy(e => e.Title)
                 .ToIEnumerableAsync();
         }
 
@@ -31,7 +39,7 @@ namespace Wallet.Services.Transactions.Repositories
             return _context.Transactions.Where(e => e.AccountId == accountId)
                 .Include(e => e.TransactionCategory)
                 .Include(e => e.TransactionTags)
-                .OrderByDescending(e=>e.Date)
+                .OrderByDescending(e => e.Date)
                 .Select(e => MapToViewModel(e)).ToIEnumerableAsync();
         }
 
@@ -46,9 +54,19 @@ namespace Wallet.Services.Transactions.Repositories
 
         public async Task<AccountTransactionViewModel> CreateTransaction(Transaction transaction)
         {
-            var res = _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
-            return MapToViewModel(res.Entity);
+            try
+            {
+                transaction.AccountTitle = (await _context.Accounts.FindAsync(transaction.AccountId)).Title;
+
+                var res = _context.Transactions.Add(transaction);
+                await _context.SaveChangesAsync();
+                return await GetTransaction(transaction.Id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task<TransactionCategory> CreateCategory(TransactionCategory category)
@@ -60,7 +78,10 @@ namespace Wallet.Services.Transactions.Repositories
 
         public async Task<AccountTransactionViewModel> GetTransaction(Guid id)
         {
-            var transaction = await _context.Transactions.FirstOrDefaultAsync(e => e.Id == id);
+            var transaction = await _context.Transactions
+                .Include(e => e.TransactionCategory)
+                .Include(e => e.TransactionTags)
+                .FirstOrDefaultAsync(e => e.Id == id);
             if (transaction is null)
                 return null;
             return MapToViewModel(transaction);
@@ -68,7 +89,7 @@ namespace Wallet.Services.Transactions.Repositories
 
         public async Task DeleteAccountTransactions(int accountId)
         {
-            _context.Transactions.RemoveRange(_context.Transactions.Where(e=>e.AccountId == accountId));
+            _context.Transactions.RemoveRange(_context.Transactions.Where(e => e.AccountId == accountId));
             await _context.SaveChangesAsync();
         }
 

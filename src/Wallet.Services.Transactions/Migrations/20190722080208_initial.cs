@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Wallet.Services.Transactions.Migrations
@@ -10,6 +11,20 @@ namespace Wallet.Services.Transactions.Migrations
             migrationBuilder.CreateSequence(
                 name: "EntityFrameworkHiLoSequence",
                 incrementBy: 10);
+
+            migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "TransactionCategories",
@@ -35,9 +50,14 @@ namespace Wallet.Services.Transactions.Migrations
                     TypeId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: false),
                     AccountId = table.Column<int>(nullable: false),
+                    AccountTitle = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
                     FromAccount = table.Column<int>(nullable: true),
                     ToAccount = table.Column<int>(nullable: true),
+                    CurrencyId = table.Column<int>(nullable: false),
+                    CurrencyTitle = table.Column<string>(nullable: true),
+                    CurrencyCode = table.Column<string>(nullable: true),
                     TransactionCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -77,6 +97,9 @@ namespace Wallet.Services.Transactions.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "TransactionTags");
 

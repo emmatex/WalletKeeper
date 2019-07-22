@@ -71,6 +71,11 @@ namespace Wallet.Services.Accounts.Controllers
             var res = await _accountRepository.CreateAccount(account);
 
             var routeValues = new { id = res.Id };
+            await _eventsBus.PublicEventAsync(new AccountCreatedEvent
+            {
+                AccountId = res.Id,
+                AccountTitle = res.Title
+            });
             return CreatedAtAction(nameof(GetAccount), routeValues, routeValues);
         }
 

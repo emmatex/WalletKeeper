@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Account} from '../domain/models/account.model';
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {CreateAccountComponent} from "./create-account/create-account.component";
 import {HttpClientService} from "../http-client.service";
 import {deleteAccount, getAccount, getAccounts} from "../urls";
 import {forkJoin} from "rxjs";
 import {EditAccountComponent} from "./edit-account/edit-account.component";
 import {DeleteConfirmationComponent} from "../delete-confirmation/delete-confirmation.component";
-import {HttpParams} from "@angular/common/http";
+import {ToastService} from "../toast.service";
 
 @Component({
   selector: 'app-accounts',
@@ -16,7 +16,7 @@ import {HttpParams} from "@angular/common/http";
 })
 export class AccountsComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private http: HttpClientService, private snack: MatSnackBar) {
+  constructor(private dialog: MatDialog, private http: HttpClientService, private toast:ToastService) {
   }
 
   accounts: Account[] = [];
@@ -28,7 +28,10 @@ export class AccountsComponent implements OnInit {
     accountsOb.subscribe(res => {
       this.accounts = res;
     });
-    forkJoin(accountsOb).subscribe(() => this.busy = false);
+    forkJoin(accountsOb).subscribe(() => this.busy = false,() => {
+      this.busy = false;
+      this.toast.genericError();
+    });
   }
 
   createAccount() {
@@ -60,10 +63,10 @@ export class AccountsComponent implements OnInit {
           this.http.delete(deleteAccount(account.id)).subscribe(() => {
             const old = this.accounts.indexOf(account);
             this.accounts.splice(old, 1);
-            this.snack.open("Account deleted successfully.", 'close', {duration: 300});
+            this.toast.show("Account deleted successfully.");
             this.busy = false;
           }, () => {
-            this.snack.open("Something went wrong", 'close', {duration: 300});
+           this.toast.genericError();
             this.busy = false;
           });
         }

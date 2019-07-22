@@ -28,3 +28,15 @@ export function deleteAccount(id:number){
 export function getTransactions(){
   return `${api()}/v1/t/transaction/`;
 }
+export function getTransaction(id:string){
+  return `${api()}/v1/t/transaction/${id}`;
+}
+export function getCategories(typeId:number){
+  return `${api()}/v1/t/transaction/getCategories/${typeId}`;
+}
+export function createTransaction(){
+  return `${api()}/v1/t/transaction/`;
+}
+export function sumTransactionsByType(){
+  return `${api()}/v1/t/transaction/sumByType`;
+}

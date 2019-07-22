@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wallet.Services.Transactions.Domain.Models;
 
@@ -14,6 +15,7 @@ namespace Wallet.Services.Transactions.Infrastructure
         {
         }
 
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionTag> TransactionTags { get; set; }
         public DbSet<TransactionCategory> TransactionCategories { get; set; }
@@ -78,7 +80,7 @@ namespace Wallet.Services.Transactions.Infrastructure
                             CurrencyTitle = "US Dollar",
                             CurrencyId = 1,
                             CurrencyCode = "USD",
-                            
+
                         },
                         new Transaction
                         {
@@ -99,6 +101,20 @@ namespace Wallet.Services.Transactions.Infrastructure
                         }
                     });
 
+                    SaveChanges();
+                }
+
+                if (!Accounts.Any())
+                {
+                    Accounts.AddRange(new Account[]
+                    {
+                        new Account
+                        {
+                            Title = "Cash default",
+                            AccountId = 1,
+                            UserId=1
+                        }
+                    });
                     SaveChanges();
                 }
             }
@@ -157,6 +173,18 @@ namespace Wallet.Services.Transactions.Infrastructure
                 .ForSqlServerUseSequenceHiLo();
 
             builder.Property(e => e.Title)
+                .IsRequired();
+        }
+    }
+    public class AccountConfiguration : IEntityTypeConfiguration<Account>
+    {
+        public void Configure(EntityTypeBuilder<Account> builder)
+        {
+            builder.Property(e => e.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(e => e.AccountId).IsRequired();
+            builder.Property(e => e.Title)
+                .IsRequired();
+            builder.Property(e => e.UserId)
                 .IsRequired();
         }
     }

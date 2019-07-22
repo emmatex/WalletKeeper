@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Wallet.Services.Authentication;
 using Wallet.Services.Transactions.Domain.Models;
 using Wallet.Services.Transactions.Domain.Repositories;
+using Wallet.Services.Transactions.Dto;
 
 namespace Wallet.Services.Transactions.Controllers
 {
@@ -22,6 +24,26 @@ namespace Wallet.Services.Transactions.Controllers
             _transactionRepository = transactionRepository;
         }
 
+        [HttpGet]
+        [Route("sumByType")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTransactionsSumByType(int transactionType, int days)
+        {
+            var userId = _identityService.GetUserId();
+            var res = await _transactionRepository.GetTransactionsSumByType(transactionType,days,userId);
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("getCategories/{typeId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> GetTransactionCategories(int typeId)
+        {
+            var userId = _identityService.GetUserId();
+            var res = await _transactionRepository.GetTransactionCategoriesAsync(userId, typeId);
+            return Ok(res);
+        }
 
         [HttpGet]
         [Route("{id:Guid}")]
@@ -56,20 +78,38 @@ namespace Wallet.Services.Transactions.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> CreateTransaction(Transaction transaction)
+        public async Task<IActionResult> CreateTransaction([FromBody]TransactionDto transactionDto)
         {
             var user = _identityService.GetUserId();
 
-            if (transaction.TypeId == (int)TransactionTypes.Income && transaction.Amount < 1)
+            if (transactionDto.TransactionTypeId == (int)TransactionTypes.Income && transactionDto.Amount < 1)
                 return BadRequest("Income transaction amount can't be less than 1.");
-            if (transaction.TypeId == (int)TransactionTypes.Expense && transaction.Amount > -1)
-                return BadRequest("Expense transaction amount can't be positive.");
-            if (transaction.TypeId < 0 || transaction.TypeId > 2)
+            if (transactionDto.TransactionTypeId < 0 || transactionDto.TransactionTypeId > 2)
                 return BadRequest("Invalid transaction type");
 
-            transaction.Type = ((TransactionTypes)transaction.TypeId).ToString();
+            var id = Guid.NewGuid();
+            var transaction = new Transaction
+            {
+                Id = id,
+                TypeId = transactionDto.TransactionTypeId,
+                AccountId = transactionDto.AccountId,
+                Amount = transactionDto.Amount,
+                CurrencyCode = transactionDto.CurrencyCode,
+                CurrencyId = transactionDto.CurrencyId,
+                CurrencyTitle = transactionDto.CurrencyTitle,
+                Date = transactionDto.Date,
+                Notes = transactionDto.Notes,
+                TransactionCategoryId = transactionDto.TransactionCategoryId,
+                UserId = _identityService.GetUserId(),
+                TransactionTags = transactionDto.Tags.Select(e => new TransactionTag
+                {
+                    TransactionId = id,
+                    Tag = e
+                }).ToList(),
+                Type = ((TransactionTypes)transactionDto.TransactionTypeId).ToString()
+            };
             var res = await _transactionRepository.CreateTransaction(transaction);
-            var values = new {id = res.Id};
+            var values = new { id = res.Id };
             return CreatedAtAction(nameof(GetTransaction), values, values);
         }
     }

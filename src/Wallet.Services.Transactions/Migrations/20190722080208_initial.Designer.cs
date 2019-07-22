@@ -10,7 +10,7 @@ using Wallet.Services.Transactions.Infrastructure;
 namespace Wallet.Services.Transactions.Migrations
 {
     [DbContext(typeof(TransactionsDbContext))]
-    [Migration("20190719132733_initial")]
+    [Migration("20190722080208_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,21 @@ namespace Wallet.Services.Transactions.Migrations
                 .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Wallet.Services.Transactions.Domain.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("Wallet.Services.Transactions.Domain.Models.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -29,7 +44,16 @@ namespace Wallet.Services.Transactions.Migrations
 
                     b.Property<int>("AccountId");
 
+                    b.Property<string>("AccountTitle")
+                        .IsRequired();
+
                     b.Property<decimal>("Amount");
+
+                    b.Property<string>("CurrencyCode");
+
+                    b.Property<int>("CurrencyId");
+
+                    b.Property<string>("CurrencyTitle");
 
                     b.Property<DateTime>("Date");
 
@@ -45,6 +69,8 @@ namespace Wallet.Services.Transactions.Migrations
                         .IsRequired();
 
                     b.Property<int>("TypeId");
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 

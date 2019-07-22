@@ -1,5 +1,53 @@
-app-transactions-list{
+@import "../../common";
+app-transactions-list {
   display: flex;
   flex-grow: 1;
-
+}
+.home-container {
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  .stats-list{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    .stat-item{
+      height: 125px;
+      flex-grow: 1;
+      margin-left: 5px;
+      color:white;
+      display: flex;
+      flex-direction: row;
+      .total{
+        margin: -5px 0 0 5px;
+        font-size: 5em;
+        opacity: 0.8;
+      }
+      h2{
+        margin: 10px 0 0 10px;
+      }
+      &:first-child{
+        margin-left: 0;
+      }
+      &.income{
+        background: rgb(15,111,96);
+        background: radial-gradient(circle, rgba(15,111,96,1) 55%, rgba(23,166,143,1) 100%);
+      }
+      &.expense{
+        background: rgb(173,0,13);
+        background: radial-gradient(circle, rgba(173,0,13,1) 55%, rgba(207,0,16,1) 100%);
+      }
+      .fill{
+        display: flex;
+        justify-content: center;
+      }
+      .chart-area{
+        font-style: italic;
+        font-weight: bold;
+        align-self: center;
+        justify-self: center;
+      }
+    }
+  }
 }

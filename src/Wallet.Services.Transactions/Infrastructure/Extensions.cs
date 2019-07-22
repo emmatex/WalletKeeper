@@ -20,6 +20,7 @@ namespace Wallet.Services.Transactions.Infrastructure
         {
             services.AddDbContext<TransactionsDbContext>(config => { config.UseSqlServer(configuration["sql:connection"]); });
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
     }
 }

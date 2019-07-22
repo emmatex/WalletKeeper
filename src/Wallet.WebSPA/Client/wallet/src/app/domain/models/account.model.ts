@@ -1,11 +1,12 @@
 
 export interface Account {
+  currencyId: number;
   id:number;
   title:string;
   accountTypeId:number;
   accountTypeTitle:string;
   createdAt:Date;
-  currencyTitle:Date;
-  currencySymbol:Date;
-  currencyCode:Date;
+  currencyTitle:string;
+  currencySymbol:string;
+  currencyCode:string;
 }

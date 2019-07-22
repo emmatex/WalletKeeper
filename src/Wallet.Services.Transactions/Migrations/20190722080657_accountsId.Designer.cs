@@ -10,8 +10,8 @@ using Wallet.Services.Transactions.Infrastructure;
 namespace Wallet.Services.Transactions.Migrations
 {
     [DbContext(typeof(TransactionsDbContext))]
-    [Migration("20190719135147_currency")]
-    partial class currency
+    [Migration("20190722080657_accountsId")]
+    partial class accountsId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,23 @@ namespace Wallet.Services.Transactions.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("Relational:Sequence:.EntityFrameworkHiLoSequence", "'EntityFrameworkHiLoSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Wallet.Services.Transactions.Domain.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccountId");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accounts");
+                });
 
             modelBuilder.Entity("Wallet.Services.Transactions.Domain.Models.Transaction", b =>
                 {

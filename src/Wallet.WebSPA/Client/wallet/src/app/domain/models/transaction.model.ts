@@ -1,12 +1,15 @@
 export interface Transaction {
-  id:string;
+  id?:string;
   amount:number;
-  accountTitle:string;
+  accountTitle?:string;
   transactionTypeId:number;
-  transactionTypeTitle:string;
+  transactionTypeTitle?:string;
   date:Date;
   notes:string;
-  transactionCategoryTitle:string;
+  transactionCategoryTitle?:string;
   transactionCategoryId:number;
   tags:string[];
+  currencyId?:number;
+  currencyCode?:string;
+  currencyTitle?:string;
 }
