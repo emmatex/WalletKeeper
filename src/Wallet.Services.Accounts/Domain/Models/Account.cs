@@ -10,7 +10,7 @@ namespace Wallet.Services.Accounts.Domain.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public int AccountTypeId { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime CreatedAt { get; set; }
         public AccountType AccountType { get; set; }
 

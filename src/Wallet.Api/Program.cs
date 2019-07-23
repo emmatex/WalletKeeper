@@ -23,7 +23,7 @@ namespace Wallet.Api
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
-                    config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: false);
+                    config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: false);  
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>();

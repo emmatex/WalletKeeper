@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using HealthChecks.UI.Client;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
@@ -52,7 +53,11 @@ namespace Wallet.Services.Identity
                 .AddEntityFrameworkStores<WalletIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(x =>
+                {
+                    x.IssuerUri = "null";
+                    x.Authentication.CookieLifetime = TimeSpan.FromHours(2);
+                })
                 .AddSigningCredential(Certificate.Get())
 
                 .AddAspNetIdentity<WalletUser>()
@@ -65,7 +70,6 @@ namespace Wallet.Services.Identity
                     options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString, sqlServerOptionsAction: sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly));
                 });
 
-            services.AddJwtAuthentication(_configuration);
             services.AddSqlRepos(_configuration);
 
             services.AddAllowCors();

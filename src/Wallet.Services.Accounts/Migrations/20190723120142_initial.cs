@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Wallet.Services.Accounts.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,8 +29,12 @@ namespace Wallet.Services.Accounts.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: false),
                     AccountTypeId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    CurrencyId = table.Column<int>(nullable: false),
+                    CurrencyTitle = table.Column<string>(nullable: true),
+                    CurrencyCode = table.Column<string>(nullable: true),
+                    CurrencySymbol = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

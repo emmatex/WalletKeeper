@@ -18,6 +18,7 @@ namespace Wallet.Services.Transactions.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -32,7 +33,7 @@ namespace Wallet.Services.Transactions.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
-                    UserId = table.Column<int>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true),
                     TransactionType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -51,7 +52,7 @@ namespace Wallet.Services.Transactions.Migrations
                     Type = table.Column<string>(nullable: false),
                     AccountId = table.Column<int>(nullable: false),
                     AccountTitle = table.Column<string>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
                     FromAccount = table.Column<int>(nullable: true),
                     ToAccount = table.Column<int>(nullable: true),

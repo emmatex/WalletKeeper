@@ -70,7 +70,7 @@ namespace Wallet.Services.Transactions.Migrations
 
                     b.Property<int>("TypeId");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -91,7 +91,7 @@ namespace Wallet.Services.Transactions.Migrations
 
                     b.Property<int>("TransactionType");
 
-                    b.Property<int?>("UserId");
+                    b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 

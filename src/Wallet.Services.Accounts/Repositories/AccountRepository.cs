@@ -25,10 +25,6 @@ namespace Wallet.Services.Accounts.Repositories
             return _context.AccountTypes.ToIEnumerableAsync();
         }
 
-        public Task<Account> InsertItemAsync(Account account)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<Account> GetAccountAsync(int id)
         {
@@ -42,7 +38,7 @@ namespace Wallet.Services.Accounts.Repositories
             return res.Entity;
         }
 
-        public Task<IEnumerable<Account>> GetAccountsByUserAsync(int userId)
+        public Task<IEnumerable<Account>> GetAccountsByUserAsync(Guid userId)
         {
             return _context.Account.Where(e => e.UserId == userId).Include(e => e.AccountType).ToIEnumerableAsync();
         }

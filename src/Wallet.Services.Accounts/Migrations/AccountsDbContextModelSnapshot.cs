@@ -40,7 +40,7 @@ namespace Wallet.Services.Accounts.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 

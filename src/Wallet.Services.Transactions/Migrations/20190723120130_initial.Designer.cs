@@ -10,8 +10,8 @@ using Wallet.Services.Transactions.Infrastructure;
 namespace Wallet.Services.Transactions.Migrations
 {
     [DbContext(typeof(TransactionsDbContext))]
-    [Migration("20190722080657_accountsId")]
-    partial class accountsId
+    [Migration("20190723120130_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,7 @@ namespace Wallet.Services.Transactions.Migrations
 
                     b.Property<int>("TypeId");
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -93,7 +93,7 @@ namespace Wallet.Services.Transactions.Migrations
 
                     b.Property<int>("TransactionType");
 
-                    b.Property<int?>("UserId");
+                    b.Property<Guid?>("UserId");
 
                     b.HasKey("Id");
 

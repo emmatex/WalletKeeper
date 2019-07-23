@@ -22,7 +22,8 @@ namespace Wallet.Services.Identity.Infrastructure
                 await _userManager.CreateAsync(new WalletUser
                 {
                     Email = "Admin@Mail.com",
-                    UserName = "admin"
+                    UserName = "admin",
+                    Id = "f873b219-b6f0-4dad-8a5a-923deb6d6708"
                 }, "123");
             }
         }

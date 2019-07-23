@@ -10,8 +10,8 @@ using Wallet.Services.Accounts.Infrastructure;
 namespace Wallet.Services.Accounts.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    [Migration("20190717084748_Initial")]
-    partial class Initial
+    [Migration("20190723120142_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,10 +31,18 @@ namespace Wallet.Services.Accounts.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("CurrencyCode");
+
+                    b.Property<int>("CurrencyId");
+
+                    b.Property<string>("CurrencySymbol");
+
+                    b.Property<string>("CurrencyTitle");
+
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 

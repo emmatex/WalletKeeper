@@ -1,4 +1,6 @@
-﻿using HealthChecks.UI.Client;
+﻿using System.IdentityModel.Tokens.Jwt;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +31,7 @@ namespace Wallet.Services.Transactions
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddJwtAuthentication(_configuration);
+            ConfigureAuthService(services);
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy());
 
@@ -82,5 +84,25 @@ namespace Wallet.Services.Transactions
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
+        private void ConfigureAuthService(IServiceCollection services)
+        {
+            // prevent from mapping "sub" claim to nameidentifier.
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var identityUrl = _configuration["urls:identity"];
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = identityUrl;
+                options.RequireHttpsMetadata = false;
+                options.Audience = "walletkeeper";
+            });
+        }
+
     }
 }

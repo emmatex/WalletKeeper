@@ -12,7 +12,7 @@ namespace Wallet.Services.Transactions.Domain.Models
         public string Type { get; set; }
         public int AccountId { get; set; }
         public string AccountTitle { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Notes { get; set; }
         public int? FromAccount { get; set; }
         public int? ToAccount { get; set; }

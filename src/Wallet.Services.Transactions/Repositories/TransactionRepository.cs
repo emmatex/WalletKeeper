@@ -19,14 +19,14 @@ namespace Wallet.Services.Transactions.Repositories
             _context = context;
         }
 
-        public async Task<decimal> GetTransactionsSumByType(int transactionType, int days, int userId)
+        public async Task<decimal> GetTransactionsSumByType(int transactionType, int days, Guid userId)
         {
             return await _context.Transactions.Where(e =>
                     e.UserId == userId && e.TypeId == transactionType && e.Date >= DateTime.Today.AddDays(-days))
                 .SumAsync(e => e.Amount);
         }
 
-        public Task<IEnumerable<TransactionCategory>> GetTransactionCategoriesAsync(int userId, int typeId)
+        public Task<IEnumerable<TransactionCategory>> GetTransactionCategoriesAsync(Guid userId, int typeId)
         {
             return _context.TransactionCategories
                 .Where(e => (!e.UserId.HasValue || e.UserId == userId) && e.TransactionType == typeId)
@@ -43,7 +43,7 @@ namespace Wallet.Services.Transactions.Repositories
                 .Select(e => MapToViewModel(e)).ToIEnumerableAsync();
         }
 
-        public Task<IEnumerable<AccountTransactionViewModel>> GetUserTransactions(int userId)
+        public Task<IEnumerable<AccountTransactionViewModel>> GetUserTransactions(Guid userId)
         {
             return _context.Transactions.Where(e => e.UserId == userId)
                 .Include(e => e.TransactionCategory)

@@ -69,38 +69,38 @@ namespace Wallet.Api
             app.UseMvcWithDefaultRoute();
             app.UseOcelot().Wait();
         }
-
-
     }
+
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            var identityUrl = configuration.GetValue<string>("urls:identity");
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = identityUrl;
-                options.RequireHttpsMetadata = false;
-                options.Audience = "walletapi";
-                options.Events = new JwtBearerEvents()
+            services.AddAuthentication()
+                .AddJwtBearer("WalletApiKey", x =>
                 {
-                    OnAuthenticationFailed = async ctx =>
+                    x.Authority = configuration["urls:identity"];
+                    x.RequireHttpsMetadata = false;
+                    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                     {
-                        int i = 0;
-                    },
-                    OnTokenValidated = async ctx =>
+                        ValidAudiences = new[] { "orders", "basket", "locations", "marketing", "mobileshoppingagg", "webshoppingagg" }
+                    };
+                    x.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents()
                     {
-                        int i = 0;
-                    }
-                };
-            });
+                        OnAuthenticationFailed = async ctx =>
+                        {
+                            int i = 0;
+                        },
+                        OnTokenValidated = async ctx =>
+                        {
+                            int i = 0;
+                        },
 
+                        OnMessageReceived = async ctx =>
+                        {
+                            int i = 0;
+                        }
+                    };
+                });
             return services;
         }
 

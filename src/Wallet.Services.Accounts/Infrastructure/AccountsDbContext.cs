@@ -51,7 +51,7 @@ namespace Wallet.Services.Accounts.Infrastructure
                             CurrencyId = 1,
                             CurrencySymbol = "$",
                             CurrencyTitle = "US Dollar",
-                            UserId = 1
+                            UserId = Guid.Parse("f873b219-b6f0-4dad-8a5a-923deb6d6708")
                         }
                     });
                     SaveChanges();

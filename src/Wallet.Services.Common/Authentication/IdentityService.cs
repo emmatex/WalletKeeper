@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 
@@ -7,7 +8,7 @@ namespace Wallet.Services.Authentication
 {
     public interface IIdentityService
     {
-        int GetUserId();
+        Guid GetUserId();
         string GetUserName();
     }
 
@@ -20,9 +21,9 @@ namespace Wallet.Services.Authentication
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public int GetUserId()
+        public Guid GetUserId()
         {
-            return int.Parse(_context.HttpContext.User.Identity.Name);
+            return Guid.Parse(_context.HttpContext.User.Claims.FirstOrDefault(e=>e.Type=="sub").Value);
         }
 
         public string GetUserName()

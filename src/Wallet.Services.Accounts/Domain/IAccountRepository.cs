@@ -9,10 +9,9 @@ namespace Wallet.Services.Accounts.Domain
     public interface IAccountRepository
     {
         Task<IEnumerable<AccountType>> GetAccountTypesAsync();
-        Task<Account> InsertItemAsync(Account account);
         Task<Account> GetAccountAsync(int id);
         Task<Account> CreateAccount(Account account);
-        Task<IEnumerable<Account>> GetAccountsByUserAsync(int userId);
+        Task<IEnumerable<Account>> GetAccountsByUserAsync(Guid userId);
         Task UpdateAccount(Account account);
         Task DeleteAccount(Account account);
     }
