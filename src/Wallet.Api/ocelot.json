@@ -22,7 +22,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/ac/{everything}",
-      "UpstreamHttpMethod": []
+      "UpstreamHttpMethod": [],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "WalletApiKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/{version}/{everything}",
@@ -46,7 +50,11 @@
         }
       ],
       "UpstreamPathTemplate": "/api/{version}/t/{everything}",
-      "UpstreamHttpMethod": []
+      "UpstreamHttpMethod": [],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "WalletApiKey",
+        "AllowedScopes": []
+      }
     }
   ]
 }

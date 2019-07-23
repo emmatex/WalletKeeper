@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authentication\**" />
+    <Content Remove="Authentication\**" />
+    <EmbeddedResource Remove="Authentication\**" />
+    <None Remove="Authentication\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.32" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="2.2.3" />
     <PackageReference Include="Coddee.AspNetCore" Version="1.5.0" />
@@ -24,10 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Wallet.Common\Wallet.Common.csproj" />
     <ProjectReference Include="..\Wallet.Services.Common\Wallet.Services.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Authentication\" />
   </ItemGroup>
 
 </Project>

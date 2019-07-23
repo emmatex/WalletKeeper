@@ -10,18 +10,18 @@ using Wallet.Services.Identity.Infrastructure;
 
 namespace Wallet.Services.Identity
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<WalletIdentityDbContext>
     {
-        public IdentityContext CreateDbContext(string[] args)
+        public WalletIdentityDbContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var builder = new DbContextOptionsBuilder<IdentityContext>();
+            var builder = new DbContextOptionsBuilder<WalletIdentityDbContext>();
             var connectionString = configuration["sql:localConnection"];
             builder.UseSqlServer(connectionString);
-            return new IdentityContext(builder.Options);
+            return new WalletIdentityDbContext(builder.Options);
         }
     }
 }

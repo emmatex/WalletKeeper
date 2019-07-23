@@ -12,20 +12,20 @@ namespace Wallet.Services.Identity.Repositories
 {
     public class UserRepository:IUserRepository
     {
-        private readonly IdentityContext _identityContext;
+        private readonly WalletIdentityDbContext _walletIdentityDbContext;
 
-        public UserRepository(IdentityContext identityContext)
+        public UserRepository(WalletIdentityDbContext walletIdentityDbContext)
         {
-            this._identityContext = identityContext;
+            this._walletIdentityDbContext = walletIdentityDbContext;
         }
         public Task<User> GetUserByUsername(string username)
         {
-            return _identityContext.Users.FirstOrDefaultAsync(e => e.Username == username.ToLower());
+            return _walletIdentityDbContext.Users.FirstOrDefaultAsync(e => e.Username == username.ToLower());
         }
 
         public Task<User> GetUserByEmail(string email)
         {
-            return _identityContext.Users.FirstOrDefaultAsync(e => e.Email == email.ToLower());
+            return _walletIdentityDbContext.Users.FirstOrDefaultAsync(e => e.Email == email.ToLower());
         }
 
         public async Task<User> InsertItem(User user, string password)
@@ -33,8 +33,8 @@ namespace Wallet.Services.Identity.Repositories
             var pass = PasswordHelper.GenerateHashedPassword(password);
             user.PasswordHash = pass.Password;
             user.PasswordSalt = pass.Salt;
-            var res = await this._identityContext.Users.AddAsync(user);
-            await _identityContext.SaveChangesAsync();
+            var res = await this._walletIdentityDbContext.Users.AddAsync(user);
+            await _walletIdentityDbContext.SaveChangesAsync();
             return res.Entity;
         }
 
