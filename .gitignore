@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+src/Wallet.Api/healthchecksdb
+src/Wallet.Api/healthchecksdb
